@@ -3,7 +3,6 @@
 <head>
 <title>Diabetes Detection System</title>
 <style>
-  </style>
 body {
   font-family: Arial;
   background-color: #f4f6f9;
@@ -25,17 +24,18 @@ body {
   box-shadow: 0 0 10px gray;
 }
 
+input {
+  padding: 8px;
+  margin: 8px;
+  width: 60%;
+}
+
 button {
   background-color: #27ae60;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #219150;
 }
 </style>
 </head>
@@ -44,22 +44,31 @@ button:hover {
 
 <div class="header">
   <h1>Diabetes Detection System 🩺</h1>
-  <p>Machine Learning Based Prediction</p>
 </div>
 
 <div class="box">
-  <h2>About Project</h2>
-  <p>This project predicts whether a person has diabetes or not using Machine Learning.</p>
-  <button>Check Prediction</button>
+  <h2>Enter Details</h2>
+
+  <input type="number" id="glucose" placeholder="Enter Glucose Level"><br>
+  <input type="number" id="bmi" placeholder="Enter BMI"><br>
+
+  <button onclick="checkDiabetes()">Check Result</button>
+
+  <h3 id="result"></h3>
 </div>
 
-<div class="box">
-  <h2>Project Features</h2>
-  <p>✔ User Input<br>
-     ✔ Data Analysis<br>
-     ✔ ML Model Prediction<br>
-     ✔ Fast Results</p>
-</div>
+<script>
+function checkDiabetes() {
+  var glucose = document.getElementById("glucose").value;
+  var bmi = document.getElementById("bmi").value;
+
+  if (glucose > 140 && bmi > 25) {
+    document.getElementById("result").innerHTML = "Result: Diabetes Positive ⚠️";
+  } else {
+    document.getElementById("result").innerHTML = "Result: Diabetes Negative ✅";
+  }
+}
+</script>
 
 </body>
 </html>
