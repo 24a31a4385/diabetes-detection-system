@@ -1,44 +1,46 @@
-<html>
-<head>
-<title>Diabetes Detection System</title>
-</head>
-<body>
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
 
-<h2>Diabetes Detection System</h2>
+# Load dataset
+data = pd.read_csv("diabetes.csv")
 
-Age:
-<input type="number" id="age">
-<br><br>
+# Split input and output
+X = data.drop("Outcome", axis=1)
+y = data["Outcome"]
 
-Glucose:
-<input type="number" id="glucose">
-<br><br>
+# Split into training and testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-BMI:
-<input type="number" id="bmi">
-<br><br>
+# Create model
+model = LogisticRegression(max_iter=1000)
 
-<button onclick="check()">Check</button>
+# Train model
+model.fit(X_train, y_train)
 
-<h3 id="result"></h3>
+# Predict
+predictions = model.predict(X_test)
 
-<script>
+# Accuracy
+accuracy = accuracy_score(y_test, predictions)
+print("Model Accuracy:", accuracy)
 
-function check() {
+# Manual input test
+preg = float(input("Enter Pregnancies: "))
+glu = float(input("Enter Glucose Level: "))
+bp = float(input("Enter Blood Pressure: "))
+skin = float(input("Enter Skin Thickness: "))
+ins = float(input("Enter Insulin: "))
+bmi = float(input("Enter BMI: "))
+dpf = float(input("Enter Diabetes Pedigree Function: "))
+age = float(input("Enter Age: "))
 
-var glucose = document.getElementById("glucose").value;
-var bmi = document.getElementById("bmi").value;
+input_data = [[preg, glu, bp, skin, ins, bmi, dpf, age]]
 
-if (glucose > 140 && bmi > 25) {
-document.getElementById("result").innerHTML = "Diabetes Positive";
-}
-else {
-document.getElementById("result").innerHTML = "Diabetes Negative";
-}
+result = model.predict(input_data)
 
-}
-
-</script>
-
-</body>
-</html>
+if result[0] == 1:
+    print("⚠ Person has Diabetes")
+else:
+    print("✅ Person does NOT have Diabetes")
